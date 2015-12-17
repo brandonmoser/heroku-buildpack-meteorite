@@ -102,6 +102,12 @@ export CPATH="$INCLUDE_PATH"
 export CPPPATH="$INCLUDE_PATH"
 
 ############################################
+# update NPM to latest
+############################################
+echo "------> Updating npm to latest"
+npm i npm@latest
+
+############################################
 # install meteorite
 ############################################
 echo "-----> Installing meteorite with npm"
