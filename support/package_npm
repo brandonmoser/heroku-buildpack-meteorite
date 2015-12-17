@@ -33,7 +33,7 @@ mkdir -p $tempdir
 cd $tempdir
 
 # download npm
-git clone https://github.com/isaacs/npm.git
+git clone https://github.com/npm/npm.git
 
 # go into npm dir
 pushd npm
