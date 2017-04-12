@@ -11,6 +11,7 @@ set -e
 unset GIT_DIR
 
 # parse and derive params
+METEOR_VERSION="1.3.2.4"
 BUILD_DIR=$1
 CACHE_DIR=$2
 LP_DIR=`cd $(dirname $0); cd ..; pwd`
@@ -122,11 +123,11 @@ mkdir -p "$HOME"
 # bundle, and install into app/
 ############################################
 cd $BUILD_DIR
-echo "Installing meteor" | indent
+echo "Installing meteor release $METEOR_VERSION" | indent
 
 # Using different folder to prevent install script form deleting packages file
 VENDORED_METEOR="$(mktmpdir meteor)"
-curl "https://install.meteor.com/?release=1.3.4.4" | HOME="$VENDORED_METEOR" /bin/sh | indent
+curl "https://install.meteor.com/?release=$METEOR_VERSION" | HOME="$VENDORED_METEOR" /bin/sh | indent
 echo "Meteor installed" | indent
 
 echo "Installing packages" | indent
