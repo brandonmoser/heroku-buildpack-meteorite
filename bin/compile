@@ -123,6 +123,9 @@ echo "-----> Installing meteorite with npm"
 run_npm "install meteorite -g"
 echo "Meteorite installed" | indent
 
+run_npm "install fibers -g"
+echo "Fibers installed" | indent
+
 METEOR_BUILD_DIR="$BUILD_DIR/.meteor/heroku_build"
 mkdir -p "$HOME"
 ############################################
@@ -136,13 +139,15 @@ VENDORED_METEOR="$(mktmpdir meteor)"
 if [ -f "${BUILD_DIR}/.meteor/release" ]; then
   METEOR_VERSION=`cat "$BUILD_DIR/.meteor/release" | sed 's/METEOR@//'`
 fi
-echo "-----> Installing Meteor version $METEOR_VERSION" | indent
+echo "-----> Installing Meteor version $METEOR_VERSION"
+METEOR_URL="https://install.meteor.com/?release=$METEOR_VERSION"
+echo "$METEOR_URL" | indent
 curl "https://install.meteor.com/?release=$METEOR_VERSION" | HOME="$VENDORED_METEOR" /bin/sh | indent
-echo "-----> Meteor installed" | indent
+echo "-----> Meteor installed"
 
-echo "-----> Installing packages" | indent
+echo "-----> Installing packages"
 HOME="$BUILD_DIR" mrt install --force | indent
-echo "-----> Building meteor bundle" | indent
+echo "-----> Building meteor bundle"
 HOME="$VENDORED_METEOR" "$VENDORED_METEOR"/.meteor/meteor bundle "$CACHE_DIR"/bundle.tar.gz 2>&1 | indent
 
 mkdir -p "$METEOR_BUILD_DIR"/app
