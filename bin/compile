@@ -63,7 +63,7 @@ function package_download() {
   curl $package -s -o - | tar -zxf  - -C $location --strip 1
 }
 
-echo "-----> Resolving engine versions"
+echo "-----> Resolving engine version"
 
 #temporary - load from nodeversion
 requested_node_ver=""
@@ -85,7 +85,7 @@ if [ "$requested_node_ver" == "" ]; then
 fi
 
 NODE_VERSION=$(curl --silent --get --data-urlencode "range=${requested_node_ver}" https://semver.io/node/resolve)
-echo "Using Node.js version: ${NODE_VERSION}" | indent
+echo "-----> Using Node.js version: ${NODE_VERSION}" | indent
 
 # vendor directories
 VENDORED_NODE="$(mktmpdir node)"
