@@ -67,11 +67,11 @@ echo "-----> Resolving engine versions"
 
 #temporary - load from nodeversion
 requested_node_ver=""
-if [ -f "${BUILD_DIR}/nodeversion" ]; then
-  echo " - nodeversion file detected, using for semvar" | indent
-  requested_node_ver=$(cat $BUILD_DIR/nodeversion)
-  echo " - requested version: $requested_node_ver" | indent
-fi
+# if [ -f "${BUILD_DIR}/nodeversion" ]; then
+#   echo " - nodeversion file detected, using for semvar" | indent
+#   requested_node_ver=$(cat $BUILD_DIR/nodeversion)
+#   echo " - requested version: $requested_node_ver" | indent
+# fi
 #TODO: Fix package.json loading
 if [ -f "${BUILD_DIR}/package.json" ]; then
   requested_node_ver=$(cat $BUILD_DIR/package.json | $LP_DIR/vendor/jq -r .engines.node)
