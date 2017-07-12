@@ -31,6 +31,9 @@ echo "-----> Cache Dir: $CACHE_DIR"
 echo "-----> Env Dir: $ENV_DIR"
 echo "-----> LP Dir: $LP_DIR"
 echo "-----> BuildPack Dir: $BUILDPACK_DIR"
+echo "-----> OS Version: $(uname)"
+echo "-----> Node? $(which nodejs) | $(which node)"
+echo "-------------------------------------\n"
 
 function error() {
   echo " !     $*"
@@ -133,10 +136,6 @@ echo "-----> Installing node-gyp"
 run_npm "install node-gyp -g"
 echo "-----> node-gyp installed"
 
-echo "-----> Installing fibers"
-run_npm "install fibers@1.0.8"
-echo "-----> Fibers installed"
-
 METEOR_BUILD_DIR="$BUILD_DIR/.meteor/heroku_build"
 mkdir -p "$HOME"
 ############################################
@@ -155,6 +154,11 @@ METEOR_URL="https://install.meteor.com/?release=$METEOR_VERSION"
 echo "$METEOR_URL" | indent
 curl "https://install.meteor.com/?release=$METEOR_VERSION" | HOME="$VENDORED_METEOR" /bin/sh | indent
 echo "-----> Meteor installed"
+
+echo "-----> (Re)Installing fibers"
+run_npm "uninstall fibers"
+run_npm "install fibers@1.0.8"
+echo "-----> Fibers installed"
 
 echo "-----> Installing packages"
 HOME="$BUILD_DIR" mrt install --force | indent
