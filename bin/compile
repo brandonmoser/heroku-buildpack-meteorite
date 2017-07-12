@@ -114,17 +114,28 @@ export npm_config_prefix="$VENDORED_MODULES"
 export CPATH="$INCLUDE_PATH"
 export CPPPATH="$INCLUDE_PATH"
 
+############################################
+# update NPM to Latest v2
+############################################
+echo "-----> Updating NPM to latest v2"
+run_npm "install -g npm@latest-2"
+echo "-----> NPM Updated"
+
 
 ############################################
-# install meteorite
+# install global npm packages
 ############################################
-echo "-----> Installing meteorite with npm"
-
+echo "-----> Installing meteorite"
 run_npm "install meteorite -g"
-echo "Meteorite installed" | indent
+echo "-----> Meteorite installed"
 
+echo "-----> Installing node-gyp"
+run_npm "install node-gyp -g"
+echo "-----> node-gyp installed"
+
+echo "-----> Installing fibers"
 run_npm "install fibers -g"
-echo "Fibers installed" | indent
+echo "-----> Fibers installed"
 
 METEOR_BUILD_DIR="$BUILD_DIR/.meteor/heroku_build"
 mkdir -p "$HOME"
@@ -158,7 +169,7 @@ rm "$CACHE_DIR"/bundle.tar.gz
 ############################################
 # Prepare ENV vars
 ############################################
-echo "Setting up MONGO_URL in .profile.d"
+echo "------> Setting up MONGO_URL in .profile.d"
 mkdir -p "$BUILD_DIR"/.profile.d
 cat > "$BUILD_DIR"/.profile.d/mongo.sh <<EOF
   #!/bin/sh
