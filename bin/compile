@@ -134,7 +134,7 @@ run_npm "install node-gyp -g"
 echo "-----> node-gyp installed"
 
 echo "-----> Installing fibers"
-run_npm "install fibers@1.0.8 -g"
+run_npm "install fibers@1.0.8"
 echo "-----> Fibers installed"
 
 METEOR_BUILD_DIR="$BUILD_DIR/.meteor/heroku_build"
