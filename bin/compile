@@ -168,12 +168,15 @@ npm uninstall fibers | indent
 npm install fibers@1.0.10 | indent
 echo "-----> Fibers installed"
 
-echo "-----> Installing packages"
+echo "-----> Installing mgp"
 #HOME="$BUILD_DIR" mrt install --force | indent
 HOME="$BUILD_DIR" mgp | indent
+
+echo "-----> meteor npm install ... Installing packages"
 HOME="$BUILD_DIR" meteor npm install | indent
 echo "-----> Building meteor bundle"
-HOME="$VENDORED_METEOR" "$VENDORED_METEOR"/.meteor/meteor bundle "$CACHE_DIR"/bundle.tar.gz 2>&1 | indent
+#HOME="$VENDORED_METEOR" "$VENDORED_METEOR"/.meteor/meteor bundle "$CACHE_DIR"/bundle.tar.gz 2>&1 | indent
+HOME="$VENDORED_METEOR" "$VENDORED_METEOR"/.meteor/meteor build "$CACHE_DIR"/bundle.tar.gz 2>&1 | indent
 
 mkdir -p "$METEOR_BUILD_DIR"/app
 tar -zxf "$CACHE_DIR"/bundle.tar.gz --strip-components 1 -C "$METEOR_BUILD_DIR"/app
