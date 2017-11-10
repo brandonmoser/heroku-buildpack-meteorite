@@ -171,6 +171,7 @@ echo "-----> Fibers installed"
 echo "-----> Installing packages"
 #HOME="$BUILD_DIR" mrt install --force | indent
 HOME="$BUILD_DIR" mgp | indent
+HOME="$BUILD_DIR" meteor npm install | indent
 echo "-----> Building meteor bundle"
 HOME="$VENDORED_METEOR" "$VENDORED_METEOR"/.meteor/meteor bundle "$CACHE_DIR"/bundle.tar.gz 2>&1 | indent
 
@@ -199,8 +200,8 @@ cp "$VENDORED_NODE/bin/node" "$METEOR_BUILD_DIR/bin/node"
 echo "-----> Move to app directory: /programs/server"
 cd "$METEOR_BUILD_DIR"/app/programs/server
 
-echo "-----> Run meteor npm install"
-meteor npm install
+#echo "-----> Run meteor npm install"
+#meteor npm install
 
 # copy over environment
 echo "-----> Copy over environment profile.d scripts"
