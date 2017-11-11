@@ -183,9 +183,7 @@ echo "........."
 echo "$(ls "$CACHE_DIR"/bundle.tar.gz)"
 
 mkdir -p "$METEOR_BUILD_DIR"/app
-CURRENT_WORKDING_DIR=`pwd`
-echo "current_working_dir=$CURRENT_WORKING_DIR"
-TEMP_FOLDER_NAME=`basename "$CURRENT_WORKING_DIR"`
+TEMP_FOLDER_NAME=`basename "$BUILD_DIR"`
 echo "temp_folder_name=$TEMP_FOLDER_NAME"
 echo "..."
 tar -zxf "$CACHE_DIR"/bundle.tar.gz/"$TEMP_FOLDER_NAME".tar.gz --strip-components 1 -C "$METEOR_BUILD_DIR"/app
