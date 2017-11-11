@@ -174,7 +174,8 @@ HOME="$BUILD_DIR" mgp | indent
 
 echo "-----> meteor npm install ... Installing packages"
 HOME="$BUILD_DIR" meteor npm install | indent
-echo "-----> Building meteor bundle"
+
+echo "-----> Building meteor build"
 #HOME="$VENDORED_METEOR" "$VENDORED_METEOR"/.meteor/meteor bundle "$CACHE_DIR"/bundle.tar.gz 2>&1 | indent
 HOME="$VENDORED_METEOR" "$VENDORED_METEOR"/.meteor/meteor build "$CACHE_DIR"/bundle.tar.gz 2>&1 | indent
 
