@@ -210,8 +210,8 @@ cp "$VENDORED_NODE/bin/node" "$METEOR_BUILD_DIR/bin/node"
 echo "-----> Move to app directory: /programs/server"
 cd "$METEOR_BUILD_DIR"/app/programs/server
 
-#echo "-----> Run meteor npm install"
-#meteor npm install
+echo "-----> Run npm install"
+npm install
 
 # copy over environment
 echo "-----> Copy over environment profile.d scripts"
