@@ -187,7 +187,7 @@ TEMP_FOLDER_NAME=`basename "$BUILD_DIR"`
 echo "temp_folder_name=$TEMP_FOLDER_NAME"
 echo "..."
 tar -zxf "$CACHE_DIR"/bundle.tar.gz/"$TEMP_FOLDER_NAME".tar.gz --strip-components 1 -C "$METEOR_BUILD_DIR"/app
-rm "$CACHE_DIR"/bundle.tar.gz
+rm -rf "$CACHE_DIR"/bundle.tar.gz
 ############################################
 
 ############################################
