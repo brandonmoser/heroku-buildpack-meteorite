@@ -165,7 +165,7 @@ echo "-----> Meteor installed | $(which meteor)"
 echo "-----> (Re)Installing fibers"
 cd $BUILD_DIR
 npm uninstall fibers | indent
-npm install fibers@1.0.10 | indent
+npm install fibers@2.0.0 | indent
 echo "-----> Fibers installed"
 
 echo "-----> Installing mgp"
