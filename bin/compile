@@ -12,7 +12,7 @@ unset GIT_DIR
 
 
 # parse and derive params
-METEOR_VERSION="1.4"
+METEOR_VERSION="1.6"
 BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
@@ -171,6 +171,9 @@ echo "-----> Fibers installed"
 echo "-----> Installing mgp"
 #HOME="$BUILD_DIR" mrt install --force | indent
 HOME="$BUILD_DIR" mgp | indent
+
+echo "-----> Install node-pre-gyp"
+npm install -g node-pre-gyp
 
 echo "-----> meteor npm install ... Installing packages"
 HOME="$BUILD_DIR" meteor npm install | indent
