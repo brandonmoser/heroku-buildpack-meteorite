@@ -12,7 +12,7 @@ unset GIT_DIR
 
 
 # parse and derive params
-METEOR_VERSION="1.3.4.4"
+METEOR_VERSION="1.6"
 BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
@@ -128,13 +128,17 @@ export CPPPATH="$INCLUDE_PATH"
 ############################################
 # install global npm packages
 ############################################
-echo "-----> Installing meteorite"
-run_npm "install meteorite -g"
-echo "-----> Meteorite installed"
+#echo "-----> Installing meteorite"
+#run_npm "install meteorite -g"
+#echo "-----> Meteorite installed"
 
 echo "-----> Installing node-gyp"
 run_npm "install node-gyp -g"
 echo "-----> node-gyp installed"
+
+echo "-----> Installing Meteor Git Packages (mgp)"
+run_npm "install mgp -g"
+echo "-----> mgp installed"
 
 METEOR_BUILD_DIR="$BUILD_DIR/.meteor/heroku_build"
 mkdir -p "$HOME"
@@ -161,17 +165,32 @@ echo "-----> Meteor installed | $(which meteor)"
 echo "-----> (Re)Installing fibers"
 cd $BUILD_DIR
 npm uninstall fibers | indent
-npm install fibers@1.0.8 | indent
+npm install fibers@2.0.0 | indent
 echo "-----> Fibers installed"
 
-echo "-----> Installing packages"
-HOME="$BUILD_DIR" mrt install --force | indent
-echo "-----> Building meteor bundle"
-HOME="$VENDORED_METEOR" "$VENDORED_METEOR"/.meteor/meteor bundle "$CACHE_DIR"/bundle.tar.gz 2>&1 | indent
+echo "-----> Installing mgp"
+#HOME="$BUILD_DIR" mrt install --force | indent
+HOME="$BUILD_DIR" mgp | indent
+
+echo "-----> Install node-pre-gyp"
+npm install -g node-pre-gyp
+
+echo "-----> meteor npm install ... Installing packages"
+HOME="$BUILD_DIR" meteor npm install | indent
+
+echo "-----> Building meteor build"
+#HOME="$VENDORED_METEOR" "$VENDORED_METEOR"/.meteor/meteor bundle "$CACHE_DIR"/bundle.tar.gz 2>&1 | indent
+HOME="$VENDORED_METEOR" "$VENDORED_METEOR"/.meteor/meteor build "$CACHE_DIR"/bundle.tar.gz 2>&1 | indent
+
+echo "........."
+echo "$(ls "$CACHE_DIR"/bundle.tar.gz)"
 
 mkdir -p "$METEOR_BUILD_DIR"/app
-tar -zxf "$CACHE_DIR"/bundle.tar.gz --strip-components 1 -C "$METEOR_BUILD_DIR"/app
-rm "$CACHE_DIR"/bundle.tar.gz
+TEMP_FOLDER_NAME=`basename "$BUILD_DIR"`
+echo "temp_folder_name=$TEMP_FOLDER_NAME"
+echo "..."
+tar -zxf "$CACHE_DIR"/bundle.tar.gz/"$TEMP_FOLDER_NAME".tar.gz --strip-components 1 -C "$METEOR_BUILD_DIR"/app
+rm -rf "$CACHE_DIR"/bundle.tar.gz
 ############################################
 
 ############################################
@@ -193,6 +212,9 @@ cp "$VENDORED_NODE/bin/node" "$METEOR_BUILD_DIR/bin/node"
 
 echo "-----> Move to app directory: /programs/server"
 cd "$METEOR_BUILD_DIR"/app/programs/server
+
+echo "-----> Install node-pre-gyp"
+npm install -g node-pre-gyp
 
 echo "-----> Run npm install"
 npm install
